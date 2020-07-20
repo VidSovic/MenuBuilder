@@ -1,0 +1,21 @@
+<div *ngIf="error" class="error">
+  <h2>An Error occured!</h2>
+  <p>{{error}}</p>
+  <button mat-button color="warn" (click)="onHandleError()">Okay</button>
+</div>
+
+<div *ngIf="!isLoading">
+  <h3 style="text-align: center;">All menu's:</h3>
+  <i style="text-align: center; display: flow-root;">(Click on it to edit!)</i>
+    <div class="example-container">
+  <div *ngFor="let menu of menus; let i = index" class="example-list" (click)="onSelectMenu(menu.id)" style="cursor: pointer;">
+    <h3>{{menu.name}}</h3>
+    <hr>
+    <p *ngFor="let item of menu.menuItems">{{item.idCategory}} - {{item.name}}</p>
+    <hr>
+    <button mat-button color="warn" (click)="removeMenu(menu.id)">Remove Menu</button>
+  </div>
+</div>
+</div>
+<mat-spinner class="spinner" *ngIf="isLoading"></mat-spinner>
+

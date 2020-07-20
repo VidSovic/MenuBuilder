@@ -1,0 +1,39 @@
+
+
+.example-container {
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: flex;
+  vertical-align: top;
+  text-align: left;
+  margin-left: 13%;
+  flex-wrap: wrap;
+}
+
+.example-list {
+  flex: 1 0 10%;
+  border: solid 1px #ccc;
+  margin: 2rem;
+  padding: 2rem;
+  -webkit-box-shadow: 9px 10px 5px 0px rgba(179,179,179,1);
+  -moz-box-shadow: 9px 10px 5px 0px rgba(179,179,179,1);
+  box-shadow: 9px 10px 5px 0px rgba(179,179,179,1);
+}
+li{
+  list-style-type: none;
+  text-align: left;
+}
+.centerAlign{
+  margin-left: 50%;
+}
+
+.spinner{
+  margin-left: 50%;
+}
+
+.error{
+  margin-top: 5px;
+  border: 1px solid rosybrown;
+  padding: 5px;
+  margin: 2rem;
+}
