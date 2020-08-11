@@ -3,7 +3,6 @@ import { Menu } from './menu-builder.model';
 import { Subject } from 'rxjs';
 import { MenuList } from './menu-list/menu-list.model';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class MenuBuilderService{
@@ -13,26 +12,22 @@ export class MenuBuilderService{
   private selectedMenuSub = new Subject<MenuList>();
 
   items: Menu[] = [];
-
   menuItems: Menu[] = [];
-
   menus: MenuList[] = [];
-
   selectedMenu: MenuList;
 
   constructor(private http: HttpClient){}
 
 
   fetchCategorys(){
-    return this.http.get<Menu[]>('http://localhost:58979/api/MenuBuilders');
+    return this.http.get<Menu[]>('http://localhost:49379/api/MenuBuilders');
   }
 
   fetchMenus(){
-
     //POTREBNO SPREMENITI GLEDE NA ZAHTEVE PB!
     //Spodaj navedene vrstice med komentarjema spremenijo dobljen string IDjev in shranijo menuje z ujemajočimi IDji
     this.menus=[];
-    return this.http.get('http://localhost:58979/api/MenuLists')
+    return this.http.get<MenuList>('http://localhost:49379/api/MenuItems')
     .subscribe(menus =>{
       //-------------------------------------------------------------------
       let menuIds = [];
@@ -47,8 +42,8 @@ export class MenuBuilderService{
           let parsedInt = menuIds[counter];
           if(parsedInt == item.idCategory){
             menusArray.push(item);
+            counter++;
           }
-          counter++;
         }
         this.menus.push({id: menus[id].id, name: menus[id].name, menuItems: menusArray})
       }
@@ -113,6 +108,7 @@ addItemWithChilds(id: number){
   this.menuItemsUpdated.next([...this.menuItems]);
   return this.sortParentChildMenuItems();
 }
+
 addMenuToList(name: string){
 
   //POTREBNO SPREMENITI GLEDE NA ZAHTEVE PB!
@@ -131,14 +127,13 @@ addMenuToList(name: string){
   const menuData = {name: name, menuItems: menuStr};
   //--------------------------------------------------------------------------------------------
 
-  this.http.post('http://localhost:58979/api/MenuLists',
+  this.http.post('http://localhost:49379/api/MenuItems',
   menuData).subscribe(()=>{
     this.fetchMenus();
   }, error =>{
     this.errorSub.next(error.message)
   });
   this.clearMenu();
-
 }
 
 onSelectMenu(id: number){
@@ -163,7 +158,7 @@ removeItemFromMenuList(id: number){
 
 
 removeMenuFromList(id: number){
-  return this.http.delete('http://localhost:58979/api/MenuLists/'+id);
+  return this.http.delete('http://localhost:49379/api/MenuItems/'+id);
 }
 
 editMenu(name: string){
@@ -184,7 +179,7 @@ editMenu(name: string){
   const menuData = {id: this.selectedMenu.id, name: name, menuItems: menuStr};
   //--------------------------------------------------------------------------------------------
 
-  this.http.put('http://localhost:58979/api/MenuLists/'+this.selectedMenu.id, menuData)
+  this.http.put('http://localhost:49379/api/MenuItems/'+this.selectedMenu.id, menuData)
   .subscribe(()=>{
     this.fetchMenus();
   }, error=>{
@@ -196,6 +191,7 @@ editMenu(name: string){
 clearMenu(){
   this.menuItems = [];
   this.menuItemsUpdated.next([...this.menuItems]);
+  this.fetchMenus();
 }
 
 }

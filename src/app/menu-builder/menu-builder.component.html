@@ -38,8 +38,8 @@
     </div>
   </div>
   <input style="margin-top: 5px; width: 96%;" matInput placeholder="Name" required #menuName name="menuName"><hr>
-  <button *ngIf="!editMode" mat-button color="primary" (click)="addMenu(menuName.value)">Save</button>
-  <button *ngIf="editMode" mat-button color="primary" (click)="editMenu()">Edit Menu</button>
+  <button [disabled]="!validCheck" *ngIf="!editMode" mat-button color="primary" (click)="addMenu(menuName.value)">Save</button>
+  <button [disabled]="!validCheck" *ngIf="editMode" mat-button color="primary" (click)="editMenu()">Edit Menu</button>
   <button mat-button color="warn" (click)="onResetMenu()">Reset Menu</button>
 </div>
 </div>

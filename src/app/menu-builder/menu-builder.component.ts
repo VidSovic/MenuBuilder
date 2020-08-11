@@ -20,7 +20,8 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
   isFetching: boolean = false;
   selectedMenu: MenuList = null;
   editMode=false;
-  invalidCheck=false;
+  validCheck: boolean=true;
+
   @ViewChild('menuName') inputName: ElementRef;
 
   constructor(private menuService: MenuBuilderService) {}
@@ -41,6 +42,11 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
     this.menuItemsSub = this.menuService.getMenuItemsUpdatedListener().subscribe((menuItems: Menu[])=>{
           this.menuItems = menuItems;
           this.menuItems = this.menuService.sortParentChildMenuItems();
+          if(this.menuItems.length > 0){
+              this.validCheck = true;
+          }else{
+            this.validCheck = false;
+          }
         });
 
     this.selectedMenuSub = this.menuService.getSelectedMenu().subscribe((selectedMenu: MenuList) =>{
@@ -48,6 +54,11 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
         this.editMode = true;
         this.inputName.nativeElement.value=selectedMenu.name;
         this.menuItems = selectedMenu.menuItems;
+        if(this.menuItems.length > 0){
+          this.validCheck = true;
+      }else{
+        this.validCheck = false;
+      }
     })
   }
 
@@ -68,10 +79,10 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
 
   addMenu(menuName: string){
     if(this.menuItems.length < 1){
-      this.error = 'None Menu items added!';
+      this.error = 'No items added!';
     }
     else if(!menuName){
-      this.error = 'Please enter name of Menu!';
+      this.error = 'Please enter a name!';
     }else
     {
       this.menuService.addMenuToList(menuName);
