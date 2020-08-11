@@ -1,27 +1,30 @@
 # MenuBuilder
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.11.
+Angular:
+- npm install
+- ng serve
 
-## Development server
+Tehnologije, ki sem uporabljal za zagon serverja in pregled nad njim:
+- SQL Server Management Studio (SSMS) (https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
+- SQL Server Express (https://www.microsoft.com/en-us/download/details.aspx?id=55994)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+ASP.NET Core 3.1 API:
+- Po vzpostavitvi serverja potrebno zagnati naslednji komandi "Update-Database -Context MenuBuilderContext" in "Update-Database -Context MenuItemContext" v Tools->NuGet Package Manager->Package Manager Console in potem se komande zapišejo v konzolo(Da se ustvari baza in potrebne tabele).
+- Zagon z Start Without Debugging (Potrebno preveriti ali se port, ki je razviden na strani katero odpre ujemaja z porti v Angular aplikaciji)!
+- Dodatni paketi, ki sem jih naložil(So sicer "Includani" v MenuBuilderApi.csproj ampak za vsak slučaj so našteti spodaj:
+    -Microsoft.AspNetCore.Cors
+    -Microsoft.EntityFrameworkCore
+    -Microsoft.EntityFrameworkCore.Sqlite(Mislim da ni potreben in bil dodan pri preizkušanju)
+    -Microsoft.EntityFrameworkCore.SqlServer
+    -Microsoft.EntityFrameworkCore.Tools
+    
+Primer kakšne podatke sem vstavil v bazo
+- Tabela MenuBuilder:
+  -IdCategory npr. 12
+  -Name npr. Sport
+  -IdParent npr. 0 (Če je parent je 0 drugače pa številka drugega IdCategory)
+- Tabela MenuItem:
+  -Name npr. First menu
+  -MenuItems npr. 12,13 (To so Idji kategorij "IdCategory" ločeni z vejico!)
+  
+  Upam da vam bo delalo tako kot meni :)
